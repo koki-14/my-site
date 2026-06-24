@@ -36,10 +36,13 @@ body {
   left: -260px;
   width: 260px;
   height: 100%;
+
   background: #333;
   padding: 60px 20px;
+
   display: flex;
   flex-direction: column;
+
   transition: left 0.3s ease;
   overflow-y: auto;
   z-index: 1000;
@@ -58,31 +61,20 @@ body {
 
 
 .log-btn {
-  position: fixed;
-  bottom: 30px; /* 画面下から20px */
-  left: 15%;
-  transform: translateX(-50%);
+  margin-top: auto;
 
-  padding: 12px 50px;
-  font-size: 16px;
+  padding: 12px;
+  color: white;
 
-  color: #fff;
-  border-bottom: 2px solid rgba(255,255,255,0.1);
-  font-size: 18px;
   background: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
 
-　/* 非表示 */
-  display: none; 
-
+  font-size: 18px;
+  cursor: pointer;
 }
 
-.log-btn.active {
 
-  /* 表示 */
-  display: block;
-  left: 15%;
-  
-}
 
 
 /* ===== サイドメニュー ここまで===== */
@@ -163,11 +155,6 @@ body {
   .side-nav {
     left: 0;
   }
-
-　.log-btn {
-    display: block;
-  }
-
 
 
   .main {
