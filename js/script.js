@@ -30,3 +30,9 @@ function closeMenu() {
   overlay.classList.remove("active");
   log-btn.classList.remove("active");
 }
+
+
+// Service Worker登録
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("../service-worker.js");
+}
