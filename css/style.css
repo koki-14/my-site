@@ -25,7 +25,7 @@ body {
   color: #fff;
   padding: 10px 16px;
 
-  z-index: 9999;     /* 最前面 */
+  z-index: 500;     /* 前面 */
 }
 
 .menu-btn {
@@ -56,7 +56,7 @@ body {
 
   transition: left 0.3s ease;
   overflow-y: auto;
-  z-index: 1000;
+  z-index: 1000; /* 最前面 */
 }
 
 .side-nav a {
