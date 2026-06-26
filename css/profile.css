@@ -1,0 +1,203 @@
+/*==============================
+プロフィールページ
+==============================*/
+
+.profile{
+
+    max-width:800px;
+
+    margin:50px auto;
+
+    /* 上80px、左右30px、下30px */
+    padding:100px 30px 30px;
+
+    text-align:center;
+
+}
+
+
+/*==============================
+プロフィール画像
+==============================*/
+
+.profile-image{
+
+    width:250px;
+
+    margin:auto;
+
+    overflow:hidden;
+
+    border-radius:15px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+}
+
+
+.profile-image img{
+
+    width:100%;
+
+    display:block;
+
+}
+
+
+/*==============================
+Instagramボタン
+==============================*/
+
+.profile-link{
+
+    margin:25px 0;
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+
+/* ボタン */
+
+.instagram-btn{
+
+    width:60px;
+
+    height:60px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.2);
+
+    transition:.3s;
+
+    text-decoration:none;
+
+}
+
+
+/* ロゴ */
+
+.instagram-btn img{
+
+    width:35px;
+
+    height:35px;
+
+}
+
+
+/* ホバー */
+
+.instagram-btn:hover{
+
+    transform:translateY(-5px) scale(1.08);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.3);
+
+}
+
+
+
+
+/*==============================
+名前
+==============================*/
+
+.profile h2{
+
+    margin-top:25px;
+
+    font-size:32px;
+
+}
+
+
+/*==============================
+誕生日
+==============================*/
+
+.birthday{
+
+    color:#777;
+
+    margin-bottom:40px;
+
+}
+
+
+/*==============================
+説明
+==============================*/
+
+.profile-text{
+
+    margin:35px 0;
+
+    text-align:left;
+
+}
+
+
+.profile-text h3{
+
+    border-left:5px solid #2196f3;
+
+    padding-left:10px;
+
+    margin-bottom:15px;
+
+}
+
+
+.profile-text p{
+
+    line-height:2;
+
+}
+
+
+/*==============================
+戻るボタン
+==============================*/
+
+.back-btn{
+
+    display:inline-block;
+
+    margin-top:40px;
+
+    padding:15px 40px;
+
+    background:#2196f3;
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:30px;
+
+    transition:.3s;
+
+}
+
+
+/* ホバー */
+
+.back-btn:hover{
+
+    background:#1976d2;
+
+    transform:translateY(-3px);
+
+}

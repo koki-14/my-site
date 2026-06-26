@@ -1,6 +1,6 @@
 {
-  "name": "マイサイト",
-  "short_name": "MySite",
+  "name": "コウキのサイト",
+  "short_name": "Ko'sSite",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",

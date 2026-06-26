@@ -1,9 +1,27 @@
 body {
   font-family: "Hiragino Mincho ProN", serif;
-  background:
-    url("https://www.transparenttextures.com/patterns/asanoha.png"),
-    #f7f3e9;
   margin: 0;
+  min-height: 100vh;
+
+  /* 背景画像 */
+  background-image: url("../img/admin.jpg");
+
+  /* 画面いっぱいに表示 */
+  background-size: cover;
+
+  /* 中央に配置 */
+  background-position: center;
+
+  /* スクロールしても固定 */
+  background-attachment: fixed;
+
+  /* 繰り返さない */
+  background-repeat: no-repeat;
+
+  /* 中身を中央配置 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
