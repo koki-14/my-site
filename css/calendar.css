@@ -1,0 +1,39 @@
+.caBtn{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+}
+
+.calendar{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:5px;
+}
+
+.week{
+  background:#444;
+  color:#fff;
+  text-align:center;
+  padding:10px;
+  font-weight:bold;
+}
+
+.day{
+  min-height:120px;
+  border:1px solid #ccc;
+  padding:5px;
+  background:#fff;
+}
+
+.date{
+  font-weight:bold;
+}
+
+.event{
+  margin-top:4px;
+  padding:2px 4px;
+  border-radius:4px;
+  color:#fff;
+  font-size:12px;
+}

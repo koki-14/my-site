@@ -1,0 +1,139 @@
+/*==============================
+  Contact一覧
+==============================*/
+
+/* カード全体を横並び */
+.contact-list{
+
+  display:flex;
+  justify-content:center;
+  gap:40px;
+
+  flex-wrap:wrap;
+
+}
+
+
+/*==============================
+  カード
+==============================*/
+
+.personal-information{
+
+  width:260px;
+
+  text-align:center;
+
+  background:#fff;
+
+  border-radius:15px;
+
+  overflow:hidden;
+
+  box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+  transition:
+    transform .4s,
+    box-shadow .4s,
+    opacity .4s;
+
+  cursor:pointer;
+
+}
+
+
+/*==============================
+  ホバー時
+==============================*/
+
+.personal-information:hover{
+
+  /* 少し上へ */
+  transform:translateY(-10px);
+
+  /* 影を強くする */
+  box-shadow:0 15px 35px rgba(0,0,0,.25);
+
+  transform:translateY(-10px) scale(1.02);
+}
+
+
+/*==============================
+  画像枠
+==============================*/
+
+.img-box{
+
+  overflow:hidden;
+
+}
+
+
+/*==============================
+  画像
+==============================*/
+
+.img-box img{
+
+  width:100%;
+
+  display:block;
+
+  transition:transform .5s;
+
+}
+
+
+/*==============================
+  ホバー時に画像拡大
+==============================*/
+
+.personal-information:hover img{
+
+  transform:scale(1.08);
+
+}
+
+
+/*==============================
+  名前
+==============================*/
+
+.personal-information h3{
+
+  margin:20px 0 10px;
+
+}
+
+
+/*==============================
+  誕生日
+==============================*/
+
+.personal-information p{
+
+  margin-bottom:20px;
+
+  color:#666;
+
+}
+
+/*==============================
+  カードリンク
+==============================*/
+
+.personal-information{
+
+  display:block;
+
+  text-decoration:none;
+
+  color:inherit;
+
+}
+
+.personal-information:hover h3{
+
+  color:#2196f3;
+
+}
