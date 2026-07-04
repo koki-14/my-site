@@ -113,6 +113,26 @@ function getClass(type){
 
 }
 
+const holidayList =
+    createHolidayList(year);
+
+if(holidayList[date]){
+
+    cell.classList.add("holiday");
+
+    const holiday =
+        document.createElement("div");
+
+    holiday.className =
+        "event holiday";
+
+    holiday.textContent =
+        holidayList[date];
+
+    cell.appendChild(holiday);
+
+}
+
 // =========================================
 // 予定表示
 // =========================================

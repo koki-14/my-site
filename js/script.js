@@ -1,6 +1,6 @@
 const menuBtn = document.getElementById("menuBtn");
 const nav = document.getElementById("nav");
-const overlay = document.getElementById("circleOverlay");
+const overlay = document.getElementById("overlay");
 const navLinks = nav.querySelectorAll("a");
 
 
