@@ -214,7 +214,9 @@ background: #ffeaea;
   font-size: 24px;
   background: none;
   border: none;
-  color: #fff;
+  color: #000;
+
+    z-index: 1500;  
 }
 
 
