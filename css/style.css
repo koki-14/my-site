@@ -6,7 +6,6 @@
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
-  touch-action:none;
 }
 /* ===== 共通 ここまで===== */
 
@@ -29,12 +28,6 @@ body {
   z-index: 500;     /* 前面 */
 }
 
-.menu-btn {
-  font-size: 24px;
-  background: none;
-  border: none;
-  color: #fff;
-}
 
 
 
@@ -215,6 +208,13 @@ background: #ffeaea;
     object-fit: cover;    /* 比率を保ったままトリミング */
 
     display: block;
+}
+
+.footer menu-btn {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #fff;
 }
 
 
