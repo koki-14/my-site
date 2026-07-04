@@ -211,9 +211,12 @@ background: #ffeaea;
 }
 
 .menu-btn {
+
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+
   font-size: 24px;
   background: none;
-  border: none;
   color: black;
 
     z-index: 1500;  
