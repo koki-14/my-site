@@ -38,6 +38,7 @@ function getClass(type) {
     case "festival": return "festival";
     case "work": return "work";
     case "personal": return "personal";
+    case "birthday": return "birthday";
     default: return "event";
   }
 }
