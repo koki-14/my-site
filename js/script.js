@@ -131,3 +131,104 @@ if (instagramLinkAyano) {
     );
   });
 }
+
+
+// ===============================
+// ★ iOS風スワイプ（追従＋影＋PC無効）
+// ===============================
+
+// PCでは無効
+const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+const maxWidth = 260; // メニュー幅
+
+let startX = 0;
+let currentX = 0;
+let dragging = false;
+let menuOpen = false;
+
+// 影（オーバーレイ透明度）
+function setOverlay(x) {
+  const p = Math.min(x / maxWidth, 1);
+  overlay.style.opacity = p * 0.5;
+}
+
+// メニュー位置
+function setNav(x) {
+  const translate = -maxWidth + x;
+  nav.style.transform = `translateX(${translate}px)`;
+}
+
+// ===============================
+// タッチ開始
+// ===============================
+if (isMobile) {
+
+  document.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+
+    // 左端 or メニュー開いてるときのみ反応
+    if (startX < 30 || menuOpen) {
+      dragging = true;
+      nav.classList.add("dragging");
+    }
+  });
+
+  // ===============================
+  // スワイプ中（追従メイン）
+  // ===============================
+  document.addEventListener("touchmove", (e) => {
+    if (!dragging) return;
+
+    currentX = e.touches[0].clientX;
+    let diff = currentX - startX;
+
+    if (menuOpen) diff = diff - maxWidth;
+
+    // 制限
+    if (diff < -maxWidth) diff = -maxWidth;
+    if (diff > 0) diff = 0;
+
+    const x = diff + maxWidth;
+
+    setNav(x);
+    setOverlay(x);
+  });
+
+  // ===============================
+  // 指を離したとき（吸着）
+  // ===============================
+  document.addEventListener("touchend", () => {
+
+    if (!dragging) return;
+
+    dragging = false;
+    nav.classList.remove("dragging");
+
+    const matrix = new WebKitCSSMatrix(getComputedStyle(nav).transform);
+    const x = matrix.m41;
+
+    // 半分基準で開閉
+    if (x > -130) {
+      openMenu();
+      nav.style.transform = "translateX(0)";
+      overlay.style.opacity = 0.5;
+      menuOpen = true;
+    } else {
+      closeMenu();
+      nav.style.transform = "translateX(-100%)";
+      overlay.style.opacity = 0;
+      menuOpen = false;
+    }
+  });
+
+  // ===============================
+  // オーバーレイで閉じる
+  // ===============================
+  overlay.addEventListener("click", () => {
+    closeMenu();
+    nav.style.transform = "translateX(-100%)";
+    overlay.style.opacity = 0;
+    menuOpen = false;
+  });
+}
