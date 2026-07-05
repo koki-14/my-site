@@ -232,3 +232,152 @@ if (isMobile) {
     menuOpen = false;
   });
 }
+
+
+// ===============================
+// iOS風スプリングメニュー（完成版）
+// 慣性 + バネ + 半開き対応
+// ===============================
+
+const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+const maxWidth = 260;
+
+// 状態
+let startX = 0;
+let currentX = 0;
+let lastX = 0;
+let velocity = 0;
+let dragging = false;
+let menuOpen = false;
+let lastTime = 0;
+
+// ===============================
+// アニメ補助（バネ）
+function springTo(target) {
+  nav.style.transition = "transform 0.35s cubic-bezier(.2,.8,.2,1)";
+  nav.style.transform = `translateX(${target}px)`;
+
+  const opacity = (target + maxWidth) / maxWidth;
+  overlay.style.transition = "opacity 0.25s ease";
+  overlay.style.opacity = Math.min(Math.max(opacity, 0), 1) * 0.5;
+}
+
+// ===============================
+// 位置更新（ドラッグ中）
+function setPosition(x) {
+  const translate = -maxWidth + x;
+  nav.style.transform = `translateX(${translate}px)`;
+
+  const p = x / maxWidth;
+  overlay.style.opacity = p * 0.5;
+}
+
+// ===============================
+// 慣性計算
+function calcVelocity(x, time) {
+  const dt = time - lastTime;
+  if (dt > 0) {
+    velocity = (x - lastX) / dt;
+  }
+  lastX = x;
+  lastTime = time;
+}
+
+// ===============================
+// タッチ開始
+// ===============================
+if (isMobile) {
+
+  document.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+    lastX = startX;
+    lastTime = Date.now();
+
+    if (startX < 30 || menuOpen) {
+      dragging = true;
+      nav.classList.add("dragging");
+    }
+  });
+
+  // ===============================
+  // ドラッグ中（追従）
+  // ===============================
+  document.addEventListener("touchmove", (e) => {
+    if (!dragging) return;
+
+    currentX = e.touches[0].clientX;
+    const now = Date.now();
+
+    let diff = currentX - startX;
+
+    if (menuOpen) diff = diff - maxWidth;
+
+    // 制限
+    if (diff < -maxWidth) diff = -maxWidth;
+    if (diff > 0) diff = 0;
+
+    const x = diff + maxWidth;
+
+    calcVelocity(x, now);
+    setPosition(x);
+  });
+
+  // ===============================
+  // 指を離す（慣性＋バネ）
+  // ===============================
+  document.addEventListener("touchend", () => {
+    if (!dragging) return;
+
+    dragging = false;
+    nav.classList.remove("dragging");
+
+    const matrix = new WebKitCSSMatrix(getComputedStyle(nav).transform);
+    let x = matrix.m41 + maxWidth;
+
+    // ===============================
+    // 慣性（スワイプ勢い）
+    // ===============================
+    const inertia = velocity * 250; // 強さ調整
+
+    x += inertia;
+
+    // ===============================
+    // 範囲制限
+    // ===============================
+    if (x < 0) x = 0;
+    if (x > maxWidth) x = maxWidth;
+
+    // ===============================
+    // 半開き・全開・閉じ判断
+    // ===============================
+
+    const half = maxWidth / 2;
+
+    let target;
+
+    if (x > half) {
+      target = maxWidth; // 全開
+      menuOpen = true;
+      openMenu();
+    } else {
+      target = 0; // 閉じる
+      menuOpen = false;
+      closeMenu();
+    }
+
+    // ===============================
+    // バネアニメーション
+    // ===============================
+    springTo(target);
+  });
+
+  // ===============================
+  // オーバーレイで閉じる
+  // ===============================
+  overlay.addEventListener("click", () => {
+    menuOpen = false;
+    closeMenu();
+    springTo(0);
+  });
+}
