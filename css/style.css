@@ -212,8 +212,8 @@ background: #ffeaea;
 
 .menu-btn {
 
-  border: 2px solid rgba(255,255,255,0.2);
-  border-radius: 8px;
+  border: 4px outset rgba(255,255,255,0.2);
+  border-radius: 5px;
 
   font-size: 24px;
   background: none;
