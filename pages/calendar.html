@@ -1,66 +1,76 @@
-async function drawCalendar() {
-  try {
-    await loadSchedule();
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    calendar.innerHTML = "";
+<title>My Site</title>
 
-    const year = current.getFullYear();
-    const month = current.getMonth();
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/calendar.css">
+<link rel="manifest" href="../manifest.json">
+</head>
 
-    monthTitle.textContent = `${year}年 ${month + 1}月`;
+<body>
 
-    const firstDay = new Date(year, month, 1).getDay();
-    const lastDate = new Date(year, month + 1, 0).getDate();
+<header class="header">
+  <h1 class="logo">Calendar</h1>
+</header>
 
-    let holidayList = {};
-    if (typeof createHolidayList === "function") {
-      holidayList = createHolidayList(year);
-    }
+<nav class="side-nav" id="nav">
+  <a href="home.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="schedule.html">Schedule</a>
+  <a href="contact.html">Contact</a>
+  <a href="calendar.html">Calendar</a>
+  <a href="news.html">News</a>
+  <a href="owner.html">Owner</a>
 
-    const weeks = ["日","月","火","水","木","金","土"];
+  <button class="insbtn" id="installBtn" hidden>Install</button>
+  <button class="logbtn" id="logoutBtn">Log Out</button>
+</nav>
 
-    weeks.forEach(day => {
-      const div = document.createElement("div");
-      div.className = "week";
-      div.textContent = day;
-      calendar.appendChild(div);
-    });
+<!-- 背景オーバーレイ -->
+<div class="overlay" id="overlay"></div>
 
-    for (let i = 0; i < firstDay; i++) {
-      calendar.appendChild(document.createElement("div"));
-    }
+<main class="main">
 
-    for (let day = 1; day <= lastDate; day++) {
-      const cell = document.createElement("div");
-      cell.className = "day";
+<section class="hero">
+  <div class="hero-text">
+    <h1>Welcome</h1>
+  </div>
+</section>
 
-      const date =
-        `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+<section class="content">
 
-      const dateDiv = document.createElement("div");
-      dateDiv.className = "date";
-      dateDiv.textContent = day;
-      cell.appendChild(dateDiv);
+<h2>Calendar</h2>
 
-      if (holidayList[date]) {
-        cell.classList.add("holiday");
+<div class="caBtn">
+  <button id="prevBtn">前月</button>
+  <h2 id="monthTitle"></h2>
+  <button id="nextBtn">次月</button>
+</div>
 
-        const holiday = document.createElement("div");
-        holiday.className = "event holiday";
-        holiday.textContent = holidayList[date];
-        cell.appendChild(holiday);
-      }
+<div id="calendar" class="calendar"></div>
 
-      drawEvents(cell, date);
+</section>
 
-      calendar.appendChild(cell);
-    }
+</main>
 
-  } catch (e) {
-    console.error("カレンダー描画エラー", e);
-  }
-}
+<footer class="footer">
+  <a href="#" id="instagramLink_koki">
+    <img src="../icon/icon-koki.png" alt="Instagram">
+  </a>
 
-window.addEventListener("DOMContentLoaded", () => {
-  drawCalendar();
-});
+  © 2026 My Site (ASADA KOKI)
+
+  <button class="menu-btn" id="menuBtn">MENU</button>
+</footer>
+
+<script src="../js/script.js" defer></script>
+<script src="../js/admin.js" defer></script>
+<script src="../js/calendar.js" defer></script>
+<script src="../js/install.js" defer></script>
+
+</body>
+</html>
