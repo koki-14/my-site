@@ -184,9 +184,9 @@ background: #ffeaea;
     justify-content: center; /* 横方向中央揃え */
     gap: 12px;            /* 写真と文字の間隔 */
 
-    padding: 10px 20px;   /* 内側の余白 */
+    padding: 10px 15px;   /* 内側の余白 */
 
-    background: rgba(255, 255, 255, 0.4); /* 背景を薄く（半透明） */
+    background: rgba(255, 255, 255, 0.6); /* 背景を薄く（半透明） */
 
     backdrop-filter: blur(10px);          /* 背景ぼかし（薄さを強調） */
     -webkit-backdrop-filter: blur(10px);
