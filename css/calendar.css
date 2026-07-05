@@ -157,6 +157,12 @@
     background:#9c27b0;
 }
 
+/* 誕生日 */
+
+.event.birthday{
+    background:#fcf;
+}
+
 /* 祝日 */
 
 .event.holiday{
