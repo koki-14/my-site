@@ -215,11 +215,13 @@ background: #ffeaea;
   border: 4px outset rgba(91,88,70,0.6);
   border-radius: 5px;
 
+  margin-left: 10px;
+
   font-size: 20px;
   background: #ddd;
   color: black;
 
-    z-index: 1500;  
+  z-index: 1500;  
 }
 
 
