@@ -110,7 +110,7 @@ body.no-scroll {
 
 /* ドラッグ中はアニメ無効 */
 #nav.dragging {
-  transition: none;
+  transition: none !important;
 }
 
 
