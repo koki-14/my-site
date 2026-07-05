@@ -113,8 +113,7 @@ function getClass(type){
 
 }
 
-const holidayList =
-    createHolidayList(year);
+
 
 if(holidayList[date]){
 
@@ -170,6 +169,9 @@ async function drawCalendar(){
 
   const year = current.getFullYear();
   const month = current.getMonth();
+
+  const holidayList =
+    createHolidayList(year);
 
   monthTitle.textContent =
     `${year}年 ${month + 1}月`;
