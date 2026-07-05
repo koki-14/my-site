@@ -215,8 +215,8 @@ background: #ffeaea;
   border: 4px outset rgba(91,88,70,0.6);
   border-radius: 5px;
 
-  font-size: 24px;
-  background: none;
+  font-size: 20px;
+  background: #ddd;
   color: black;
 
     z-index: 1500;  
