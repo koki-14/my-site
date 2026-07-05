@@ -10,6 +10,10 @@ body {
   font-family: system-ui, sans-serif; /* OS標準フォント */
 }
 
+/* スクロール禁止用 */
+body.no-scroll {
+  overflow: hidden;
+}
 
 /* ===============================
    ヘッダー（スマホ・PC共通）
