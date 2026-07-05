@@ -182,7 +182,7 @@ background: #ffeaea;
     display: flex;        /* 写真と文字を横並びに */
     align-items: center;  /* 縦方向中央揃え */
     justify-content: center; /* 横方向中央揃え */
-    gap: 12px;            /* 写真と文字の間隔 */
+    gap: 20px;            /* 写真と文字の間隔 */
 
     padding: 10px 15px;   /* 内側の余白 */
 
