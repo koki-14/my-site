@@ -97,6 +97,24 @@ body.no-scroll {
 }
 
 
+#nav {
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+  will-change: transform;
+}
+
+/* 開いた状態 */
+#nav.active {
+  transform: translateX(0);
+}
+
+/* ドラッグ中はアニメ無効 */
+#nav.dragging {
+  transition: none;
+}
+
+
+
 /* ===============================
    背景オーバーレイ（暗くするやつ）
 ================================ */
