@@ -22,6 +22,7 @@ body {
   align-items: center;
   gap: 15px;
   background: #222;
+  background-position: center center;
   color: #fff;
   padding: 10px 13px;
 
