@@ -46,19 +46,37 @@ function unlockScroll() {
 // メニュー開閉（統一管理）
 // ===============================
 function openMenu() {
+
+  menuOpen = true;
+
   nav.classList.add("active");
   overlay.classList.add("active");
   logoutBtn?.classList.add("active");
 
-  lockScroll(); // ★スクロール停止
+  nav.style.transition = "transform .35s cubic-bezier(.2,.8,.2,1)";
+  nav.style.transform = "translateX(0)";
+
+  overlay.style.opacity = "0.5";
+
+  lockScroll();
+
 }
 
 function closeMenu() {
+
+  menuOpen = false;
+
   nav.classList.remove("active");
   overlay.classList.remove("active");
   logoutBtn?.classList.remove("active");
 
-  unlockScroll(); // ★スクロール復帰
+  nav.style.transition = "transform .35s cubic-bezier(.2,.8,.2,1)";
+  nav.style.transform = "translateX(-100%)";
+
+  overlay.style.opacity = "0";
+
+  unlockScroll();
+
 }
 
 // ===============================
@@ -134,7 +152,7 @@ if (instagramLinkAyano) {
 
 
 // ===============================
-// ★ iOS風スワイプ（追従＋影＋PC無効）
+// ★ iOS風スワイプ（追従＋影＋PC無効+慣性 + バネ + 半開き対応）
 // ===============================
 
 // PCでは無効
@@ -142,10 +160,15 @@ const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
 const maxWidth = 260; // メニュー幅
 
+// 状態
 let startX = 0;
 let currentX = 0;
 let dragging = false;
 let menuOpen = false;
+let lastX = 0;
+let velocity = 0;
+let lastTime = 0;
+
 
 // 影（オーバーレイ透明度）
 function setOverlay(x) {
@@ -159,137 +182,57 @@ function setNav(x) {
   nav.style.transform = `translateX(${translate}px)`;
 }
 
-// ===============================
-// タッチ開始
-// ===============================
-if (isMobile) {
-
-  document.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
-
-    // 左端 or メニュー開いてるときのみ反応
-    if (startX < 30 || menuOpen) {
-      dragging = true;
-      nav.classList.add("dragging");
-    }
-  });
-
-  // ===============================
-  // スワイプ中（追従メイン）
-  // ===============================
-  document.addEventListener("touchmove", (e) => {
-    if (!dragging) return;
-
-    currentX = e.touches[0].clientX;
-    let diff = currentX - startX;
-
-    if (menuOpen) diff = diff - maxWidth;
-
-    // 制限
-    if (diff < -maxWidth) diff = -maxWidth;
-    if (diff > 0) diff = 0;
-
-    const x = diff + maxWidth;
-
-    setNav(x);
-    setOverlay(x);
-  });
-
-  // ===============================
-  // 指を離したとき（吸着）
-  // ===============================
-  document.addEventListener("touchend", () => {
-
-    if (!dragging) return;
-
-    dragging = false;
-    nav.classList.remove("dragging");
-
-    const matrix = new WebKitCSSMatrix(getComputedStyle(nav).transform);
-    const x = matrix.m41;
-
-    // 半分基準で開閉
-    if (x > -130) {
-      openMenu();
-      nav.style.transform = "translateX(0)";
-      overlay.style.opacity = 0.5;
-      menuOpen = true;
-    } else {
-      closeMenu();
-      nav.style.transform = "translateX(-100%)";
-      overlay.style.opacity = 0;
-      menuOpen = false;
-    }
-  });
-
-  // ===============================
-  // オーバーレイで閉じる
-  // ===============================
-  overlay.addEventListener("click", () => {
-    closeMenu();
-    nav.style.transform = "translateX(-100%)";
-    overlay.style.opacity = 0;
-    menuOpen = false;
-  });
-}
-
-
-// ===============================
-// iOS風スプリングメニュー（完成版）
-// 慣性 + バネ + 半開き対応
-// ===============================
-
-const isMobile = window.matchMedia("(max-width: 768px)").matches;
-
-const maxWidth = 260;
-
-// 状態
-let startX = 0;
-let currentX = 0;
-let lastX = 0;
-let velocity = 0;
-let dragging = false;
-let menuOpen = false;
-let lastTime = 0;
 
 // ===============================
 // アニメ補助（バネ）
+// ===============================
 function springTo(target) {
-  nav.style.transition = "transform 0.35s cubic-bezier(.2,.8,.2,1)";
-  nav.style.transform = `translateX(${target}px)`;
 
-  const opacity = (target + maxWidth) / maxWidth;
-  overlay.style.transition = "opacity 0.25s ease";
-  overlay.style.opacity = Math.min(Math.max(opacity, 0), 1) * 0.5;
+  nav.style.transition =
+      "transform .35s cubic-bezier(.2,.8,.2,1)";
+
+  nav.style.transform =
+      `translateX(${target-maxWidth}px)`;
+
+  overlay.style.transition =
+      "opacity .25s ease";
+
+  overlay.style.opacity =
+      (target/maxWidth)*0.5;
+
 }
 
 // ===============================
-// 位置更新（ドラッグ中）
+// メニュー位置更新
+// ===============================
 function setPosition(x) {
-  const translate = -maxWidth + x;
+  const translate = x - maxWidth;
   nav.style.transform = `translateX(${translate}px)`;
 
-  const p = x / maxWidth;
-  overlay.style.opacity = p * 0.5;
+  overlay.style.opacity = (x / maxWidth) * 0.5;
 }
 
 // ===============================
 // 慣性計算
+// ===============================
 function calcVelocity(x, time) {
   const dt = time - lastTime;
+
   if (dt > 0) {
     velocity = (x - lastX) / dt;
   }
+
   lastX = x;
   lastTime = time;
 }
 
 // ===============================
-// タッチ開始
+// iOS風スワイプ
 // ===============================
 if (isMobile) {
 
   document.addEventListener("touchstart", (e) => {
+
     startX = e.touches[0].clientX;
     lastX = startX;
     lastTime = Date.now();
@@ -298,86 +241,80 @@ if (isMobile) {
       dragging = true;
       nav.classList.add("dragging");
     }
+
   });
 
-  // ===============================
-  // ドラッグ中（追従）
-  // ===============================
   document.addEventListener("touchmove", (e) => {
+
     if (!dragging) return;
 
     currentX = e.touches[0].clientX;
+
     const now = Date.now();
 
     let diff = currentX - startX;
 
-    if (menuOpen) diff = diff - maxWidth;
+    if (menuOpen) {
+      diff -= maxWidth;
+    }
 
-    // 制限
-    if (diff < -maxWidth) diff = -maxWidth;
-    if (diff > 0) diff = 0;
+    diff = Math.max(-maxWidth, Math.min(0, diff));
 
     const x = diff + maxWidth;
 
     calcVelocity(x, now);
+
     setPosition(x);
+
   });
 
-  // ===============================
-  // 指を離す（慣性＋バネ）
-  // ===============================
   document.addEventListener("touchend", () => {
+
     if (!dragging) return;
 
     dragging = false;
+
     nav.classList.remove("dragging");
 
-    const matrix = new WebKitCSSMatrix(getComputedStyle(nav).transform);
+    const matrix = new WebKitCSSMatrix(
+      getComputedStyle(nav).transform
+    );
+
     let x = matrix.m41 + maxWidth;
 
-    // ===============================
-    // 慣性（スワイプ勢い）
-    // ===============================
-    const inertia = velocity * 250; // 強さ調整
+    // 慣性
+    x += velocity * 250;
 
-    x += inertia;
+    x = Math.max(0, Math.min(maxWidth, x));
 
-    // ===============================
-    // 範囲制限
-    // ===============================
-    if (x < 0) x = 0;
-    if (x > maxWidth) x = maxWidth;
+    if (x > maxWidth / 2) {
 
-    // ===============================
-    // 半開き・全開・閉じ判断
-    // ===============================
-
-    const half = maxWidth / 2;
-
-    let target;
-
-    if (x > half) {
-      target = maxWidth; // 全開
       menuOpen = true;
+
       openMenu();
+
+      springTo(maxWidth);
+
     } else {
-      target = 0; // 閉じる
+
       menuOpen = false;
+
       closeMenu();
+
+      springTo(0);
+
     }
 
-    // ===============================
-    // バネアニメーション
-    // ===============================
-    springTo(target);
   });
 
-  // ===============================
-  // オーバーレイで閉じる
-  // ===============================
   overlay.addEventListener("click", () => {
+
     menuOpen = false;
+
     closeMenu();
+
     springTo(0);
+
   });
+
 }

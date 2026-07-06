@@ -43,7 +43,7 @@ body.no-scroll {
 .side-nav {
   position: fixed;
   top: 0;
-  left: -260px; /* 初期は画面外（隠す） */
+  left: 0;
   width: 260px;
   height: 100%;
 
@@ -53,15 +53,21 @@ body.no-scroll {
   display: flex;
   flex-direction: column; /* 縦並び */
 
-  transition: left 0.3s ease; /* スライドアニメ */
   overflow-y: auto;
+
+  transform:translateX(-100%);
+
+  transition: transform .35s cubic-bezier(.22,.8,.2,1);
+
+  will-change: transform;
+
+  touch-action: pan-y;
 
   z-index: 2000; /* 最前面 */
 }
 
 /* サイドメニュー表示状態 */
 .side-nav.active {
-  left: 0; /* 画面内に出す */
 }
 
 /* メニューリンク */
@@ -70,6 +76,12 @@ body.no-scroll {
   text-decoration: none;
   padding: 12px 0;
   border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.side-nav.dragging{
+
+transition:none;
+
 }
 
 
@@ -97,23 +109,6 @@ body.no-scroll {
 }
 
 
-#nav {
-  transform: translateX(-100%);
-  transition: transform 0.25s ease;
-  will-change: transform;
-}
-
-/* 開いた状態 */
-#nav.active {
-  transform: translateX(0);
-}
-
-/* ドラッグ中はアニメ無効 */
-#nav.dragging {
-  transition: none !important;
-}
-
-
 
 /* ===============================
    背景オーバーレイ（暗くするやつ）
@@ -126,14 +121,15 @@ body.no-scroll {
   opacity: 0;
   pointer-events: none; /* クリック無効 */
 
-  transition: opacity 0.3s ease;
+  transition: opacity .25s ease;
+
+  will-change: opacity;
 
   z-index: 1500;
 }
 
 /* 表示状態 */
 .overlay.active {
-  opacity: 1;
   pointer-events: auto; /* クリック可能 */
 }
 
@@ -303,8 +299,11 @@ body.no-scroll {
   }
 
   /* サイドメニュー常時表示 */
-  .side-nav {
-    left: 0;
+
+  .side-nav{
+
+    transform:none;
+    transition: none;
   }
 
   /* メインを右にずらす */
