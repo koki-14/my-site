@@ -6,7 +6,6 @@ const menuBtn = document.getElementById("menuBtn");
 const nav = document.getElementById("nav");
 const overlay = document.getElementById("overlay");
 const navLinks = nav.querySelectorAll("a");
-const logoutBtn = document.getElementById("logoutBtn"); // ★追加（未定義防止）
 
 // ===============================
 // ログインチェック（必須）

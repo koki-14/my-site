@@ -6,7 +6,7 @@ const urls = [
 "/index.html",
 "/pages/home.html",
 "/pages/about.html",
-"/pages/calender.html",
+"/pages/calendar.html",
 "/pages/contact.html",
 "/pages/schedule.html",
 "/pages/owner.html",
@@ -23,6 +23,8 @@ const urls = [
 "/js/admin.js",
 "/js/script.js",
 "/js/calendar.js",
+"/js/holiday.js",
+"/js/login.js",
 "/js/install.js",
 
 "/data/2026/schedule.json",
