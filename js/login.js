@@ -115,7 +115,9 @@ if (OwnerPagesLogoutBtn) {
 
   OwnerPagesLogoutBtn.addEventListener("click", () => {
 
-    sessionStorage.setItem("role", "admin"); // オーナーログインを消し管理者として残す    location.replace("../home.html");
+    sessionStorage.setItem("role", "admin"); // オーナーログインを消し管理者として残す    
+
+location.replace("../home.html");
 
 
 
