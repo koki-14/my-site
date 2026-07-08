@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==========================================
   const slides = [
     "../img/slide/slide1.jpg",
-    "../img/slide/slide2.jpg",
+    "../img/slide/slide2.JPG",
     "../img/slide/slide3.jpg",
     "../img/slide/slide4.jpg",
     "../img/slide/slide5.jpg",
