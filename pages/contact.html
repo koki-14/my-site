@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Site</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/contact.css">
+  <link rel="manifest" href="../manifest.json">
+</head>
+<body>
+
+
+<!-- ヘッダー（スマホ用） -->
+<header class="header">
+  <h1 class="logo">Contact</h1>
+</header>
+
+<!-- 左スライドメニュー -->
+<nav class="side-nav" id="nav">
+  <a href="home.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="schedule.html">Schedule</a>
+  <a href="contact.html">Contact</a>
+  <a href="calendar.html">Calendar</a>
+  <a href="news.html">News</a>
+  <a id="OwnerLogin">Owner</a>
+  <button class="insbtn" id="installBtn" hidden>Install</button>
+  <button class="logbtn" id="logoutBtn">Log Out</button>
+</nav>
+
+
+
+<!-- 背景オーバーレイ -->
+<div class="overlay" id="overlay"></div>
+
+
+<!-- メイン -->
+<main class="main">
+
+  <section class="content">
+    <h2>プロフィール！</h2>
+ 
+  <div class="contact-list">
+
+    <!-- Koki -->
+    <a href="profile/koki.html" class="personal-information">
+
+      <div class="img-box">
+        <img src="../img/koki.jpg" alt="Koki">
+      </div>
+
+      <h3>Koki</h3>
+    </a>
+
+    <!-- Ayano -->
+    <a href="profile/ayano.html" class="personal-information">
+
+      <div class="img-box">
+        <img src="../img/ayano.jpg" alt="Ayano">
+      </div>
+
+      <h3>Ayano</h3>
+    </a>
+
+
+
+
+  </div>
+
+  </section>
+</main>
+
+<footer class="footer">
+  <a href="#" id="instagramLink_koki">
+    <img src="../icon/icon-koki.png" alt="Instagram">
+  </a>
+  © 2026 My Site (ASADA KOKI)
+<button class="menu-btn" id="menuBtn">MENU</button>
+</footer>
+
+  <script src="../js/script.js" defer></script>
+  <script src="../js/login.js" defer></script>
+  <script src="../js/install.js" defer></script>
+
+</body>
+</html>
