@@ -283,19 +283,20 @@ border: 4px double #fff;
 /* ===============================
    スマホ表示
 ================================ */
-@media (max-width: 480px) {
+@media (max-width: 769px) {
   /*  ヘッダー  */
   .header {
-    height: 105px;
+    height: 80px;
   }
 
   .logo {
-    font-family: "Book Antiqua","Arial Black", sans-serif;
+    font-family: 'Times New Roman', Times, serif;
+    letter-spacing: 1em; /* 文字間を広げる */
   }
 
   .side-nav a {
-    font-size: 28px;
-    letter-spacing: 1em; /* 文字間を広げる */
+    font-size: 13px;
+    letter-spacing: 0.5em; /* 文字間を広げる */
   }
 
 }

@@ -2,7 +2,7 @@
    メインコンテンツ
 ================================ */
 .main {
-  padding-top: 80px;
+  padding-top: 60px;
   padding-left: 0;
 
   /* フッターに隠れないよう余白 */
@@ -72,54 +72,3 @@
   font-size: 20px;
 }
 /* news.html  ここまで*/
-
-/* ===============================
-   PC表示
-================================ */
-@media (min-width: 769px) {
-
-  /* モバイル専用要素は非表示 */
-  .menu-container,
-  .sercle-btn,
-  .selected-label {
-    display: none;
-  }
-
-  .menu-btn {
-    display: none;
-  }
-
-  /* サイドメニュー常時表示 */
-
-  .side-nav{
-
-    transform:none;
-    transition: none;
-  }
-
-  /* メインを右にずらす */
-  .main {
-    margin-left: 260px;
-  }
-
-  /* ヘッダーをサイドメニュー分ずらす */
-  .header {
-    position: fixed;
-    left: 260px;
-    right: 0;
-    top: 0;
-  }
-
-  /* ヒーローの位置調整 */
-  .hero {
-    margin-top: 105.6px;
-  }
-}
-
-
-/* ===============================
-   スマホ（追加調整用）
-================================ */
-@media (max-width: 480px) {
-  /* 今は空（必要ならここに追加） */
-}
