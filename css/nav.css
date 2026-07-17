@@ -291,11 +291,11 @@ border: 4px double #fff;
 
   .logo {
     font-family: 'Times New Roman', Times, serif;
-    letter-spacing: 1em; /* 文字間を広げる */
+    letter-spacing: 0.2em; /* 文字間を広げる */
   }
 
   .side-nav a {
-    font-size: 13px;
+    font-size: 15px;
     letter-spacing: 0.5em; /* 文字間を広げる */
   }
 
