@@ -1,22 +1,49 @@
 {
+  "2026-08-09": [
+    {
+      "type": "personal",
+      "title": "お昼ご飯",
+      "time" : "11:00~13:00",
+      "place":"Bakery Cafe & Restaurant ON THE HILL",
+      "detail":"カフェ"
+    },
+
+    {
+      "type": "personal",
+      "title": "岩盤浴",
+      "time" : "16:00~21:00",
+      "place":"あかねの湯(加古川)",
+      "detail":"お風呂"
+    }
+  ],
+
   "2026-08-29": [
     {
+      "type": "travel",
       "title": "城崎旅行 1日目",
-      "type": "travel"
+      "time" : "09:00~24:00",
+      "place":"城崎",
+      "detail":"1日目"
     }
   ],
 
   "2026-08-30": [
     {
+      "type": "travel",
       "title": "城崎旅行 2日目",
-      "type": "travel"
+      "time": "0:00~23:00",
+      "place":"城崎",
+      "detail":"2日目"
     }
   ],
 
   "2026-12-25": [
     {
+      "type": "event",
       "title": "クリスマス",
-      "type": "event"
+      "time": "0:00~24:00",
+      "place":"どこだろ。",
+      "detail":"サンタさんのお祭り"
     }
   ]
 }

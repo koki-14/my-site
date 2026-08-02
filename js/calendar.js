@@ -33,24 +33,35 @@ nextBtn.addEventListener("click", async () => {
 // スケジュールデータを読み込む
 // ===============================
 async function loadSchedule() {
-  const year = current.getFullYear(); // 現在表示中の年
 
-  // すでに同じ年を読み込んでいるなら処理しない（無駄なfetch防止）
-  if (loadedYear === year) return;
+  const year = current.getFullYear();
 
   try {
-    // 年ごとのJSONファイルを取得
+
     const res = await fetch(`../data/${year}/schedule.json`);
 
-    // 成功したらJSONを使用、失敗したら空データ
-    schedules = res.ok ? await res.json() : {};
-  } catch (e) {
-    // 通信エラー時も空データにする
-    schedules = {};
-  }
+    if (!res.ok) {
 
-  // 読み込んだ年を記録
-  loadedYear = year;
+      console.error(
+        `schedule.jsonを読み込めませんでした: ${res.status}`
+      );
+
+      schedules = {};
+
+      return;
+    }
+
+    schedules = await res.json();
+
+    console.log("読み込んだスケジュール:", schedules);
+
+  } catch (error) {
+
+    console.error("JSON読み込みエラー:", error);
+
+    schedules = {};
+
+  }
 }
 
 // ===============================
@@ -133,6 +144,19 @@ async function drawCalendar() {
     const date =
       `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 
+// ===============================
+// 今日の日付か判定
+// ===============================
+const today = new Date();
+
+const todayDate =
+  `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
+// 今日ならtodayクラスを追加
+if (date === todayDate) {
+  cell.classList.add("today");
+}
+
     // 日付表示部分
     const dateDiv = document.createElement("div");
     dateDiv.className = "date";
@@ -152,10 +176,204 @@ async function drawCalendar() {
     // スケジュール表示
     drawEvents(cell, date);
 
+  // ===============================
+  // 日付クリック
+  // ===============================
+  cell.addEventListener("click", () => {
+
+    // クリックした日の予定を表示
+    openScheduleModal(date, holidayList[date]);
+
+  });
+
     // カレンダーに追加
     calendar.appendChild(cell);
   }
 }
+
+
+
+// ===============================
+// モーダル要素
+// ===============================
+const scheduleModal = document.getElementById("scheduleModal");
+const modalDate = document.getElementById("modalDate");
+const modalEvents = document.getElementById("modalEvents");
+const modalClose = document.getElementById("modalClose");
+
+
+// ===============================
+// 予定詳細を表示
+// ===============================
+function openScheduleModal(date, holidayName) {
+
+  // -------------------------------
+  // 日付を表示
+  // -------------------------------
+  modalDate.textContent = date;
+
+
+  // -------------------------------
+  // 既存内容を削除
+  // -------------------------------
+  modalEvents.innerHTML = "";
+
+
+  // -------------------------------
+  // 祝日
+  // -------------------------------
+  if (holidayName) {
+
+    const holiday = document.createElement("div");
+
+    holiday.className = "modal-holiday";
+    holiday.textContent = `祝日：${holidayName}`;
+
+    modalEvents.appendChild(holiday);
+  }
+
+
+  // -------------------------------
+  // 予定を取得
+  // -------------------------------
+  const events = schedules[date];
+
+
+  // -------------------------------
+  // 予定がない場合
+  // -------------------------------
+  if (!events || events.length === 0) {
+
+    const empty = document.createElement("p");
+
+    empty.textContent = "予定はありません。";
+
+    modalEvents.appendChild(empty);
+
+  }
+
+
+  // -------------------------------
+  // 予定を表示
+  // -------------------------------
+  else {
+
+    events.forEach(item => {
+
+      const event = document.createElement("div");
+
+      event.className =
+        "modal-event " + getClass(item.type);
+
+
+      // 予定タイトル
+      const title = document.createElement("div");
+
+      title.className = "modal-event-title";
+      title.textContent = item.title;
+
+      event.appendChild(title);
+
+      // -------------------------------
+      // 時間
+      // -------------------------------
+      if (item.time) {
+
+        const time = document.createElement("div");
+
+        time.textContent = `時間：${item.time}`;
+
+        event.appendChild(time);
+      }
+
+
+      // -------------------------------
+      // 場所
+      // -------------------------------
+      if (item.place) {
+
+        const place = document.createElement("div");
+
+        place.textContent = `場所：${item.place}`;
+
+        event.appendChild(place);
+      }
+
+
+      // -------------------------------
+      // 詳細
+      // -------------------------------
+      if (item.detail) {
+
+        const detail = document.createElement("div");
+
+        detail.textContent = `詳細：${item.detail}`;
+
+        event.appendChild(detail);
+      }
+
+
+      // 予定種類
+      const type = document.createElement("div");
+
+      type.className = "modal-event-type";
+      type.textContent = `種類：${item.type}`;
+
+
+
+      event.appendChild(type);
+
+      modalEvents.appendChild(event);
+
+    });
+
+  }
+
+
+  // -------------------------------
+  // モーダル表示
+  // -------------------------------
+  scheduleModal.classList.add("show");
+
+}
+
+
+// ===============================
+// 閉じるボタン
+// ===============================
+modalClose.addEventListener("click", () => {
+
+  scheduleModal.classList.remove("show");
+
+});
+
+
+// ===============================
+// モーダル外側をクリックして閉じる
+// ===============================
+scheduleModal.addEventListener("click", (e) => {
+
+  if (e.target === scheduleModal) {
+
+    scheduleModal.classList.remove("show");
+
+  }
+
+});
+
+
+// ===============================
+// ESCキーで閉じる
+// ===============================
+document.addEventListener("keydown", (e) => {
+
+  if (e.key === "Escape") {
+
+    scheduleModal.classList.remove("show");
+
+  }
+
+});
 
 // ===============================
 // ページ読み込み時にカレンダー表示
