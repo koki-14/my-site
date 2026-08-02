@@ -156,170 +156,40 @@ if (instagramLinkAyano) {
 }
 
 
-// ===============================
-// ★ iOS風スワイプ（追従＋影＋PC無効+慣性 + バネ + 半開き対応）
-// ===============================
-
-// PCでは無効
-const isMobile = window.matchMedia("(max-width: 768px)").matches;
-
-const maxWidth = 260; // メニュー幅
-
-// 状態
-let startX = 0;
-let currentX = 0;
-let dragging = false;
-let menuOpen = false;
-let lastX = 0;
-let velocity = 0;
-let lastTime = 0;
-
-
-// 影（オーバーレイ透明度）
-function setOverlay(x) {
-  const p = Math.min(x / maxWidth, 1);
-  overlay.style.opacity = p * 0.5;
-}
-
-// メニュー位置
-function setNav(x) {
-  const translate = -maxWidth + x;
-  nav.style.transform = `translateX(${translate}px)`;
-}
-
-
-// ===============================
-// アニメ補助（バネ）
-// ===============================
-function springTo(target) {
-
-  nav.style.transition =
-      "transform .35s cubic-bezier(.2,.8,.2,1)";
-
-  nav.style.transform =
-      `translateX(${target-maxWidth}px)`;
-
-  overlay.style.transition =
-      "opacity .25s ease";
-
-  overlay.style.opacity =
-      (target/maxWidth)*0.5;
-
-}
-
-// ===============================
-// メニュー位置更新
-// ===============================
-function setPosition(x) {
-  const translate = x - maxWidth;
-  nav.style.transform = `translateX(${translate}px)`;
-
-  overlay.style.opacity = (x / maxWidth) * 0.5;
-}
-
-// ===============================
-// 慣性計算
-// ===============================
-function calcVelocity(x, time) {
-  const dt = time - lastTime;
-
-  if (dt > 0) {
-    velocity = (x - lastX) / dt;
-  }
-
-  lastX = x;
-  lastTime = time;
-}
-
-// ===============================
-// iOS風スワイプ
-// ===============================
-if (isMobile) {
-
-  document.addEventListener("touchstart", (e) => {
-
-    startX = e.touches[0].clientX;
-    lastX = startX;
-    lastTime = Date.now();
-
-    if (startX < 30 || menuOpen) {
-      dragging = true;
-      nav.classList.add("dragging");
-    }
-
-  });
-
-  document.addEventListener("touchmove", (e) => {
-
-    if (!dragging) return;
-
-    currentX = e.touches[0].clientX;
-
-    const now = Date.now();
-
-    let diff = currentX - startX;
-
-    if (menuOpen) {
-      diff -= maxWidth;
-    }
-
-    diff = Math.max(-maxWidth, Math.min(0, diff));
-
-    const x = diff + maxWidth;
-
-    calcVelocity(x, now);
-
-    setPosition(x);
-
-  });
-
-  document.addEventListener("touchend", () => {
-
-    if (!dragging) return;
-
-    dragging = false;
-
-    nav.classList.remove("dragging");
-
-    const matrix = new WebKitCSSMatrix(
-      getComputedStyle(nav).transform
-    );
-
-    let x = matrix.m41 + maxWidth;
-
-    // 慣性
-    x += velocity * 250;
-
-    x = Math.max(0, Math.min(maxWidth, x));
-
-    if (x > maxWidth / 2) {
-
-      menuOpen = true;
-
-      openMenu();
-
-      springTo(maxWidth);
-
-    } else {
-
-      menuOpen = false;
-
-      closeMenu();
-
-      springTo(0);
-
-    }
-
-  });
-
-  overlay.addEventListener("click", () => {
-
-    menuOpen = false;
-
-    closeMenu();
-
-    springTo(0);
-
-  });
-
-}
+// =============================== 
+// ★ iOS風スワイプ（追従＋影＋PC無効+慣性 + バネ + 半開き対応） 
+// =============================== 
+// PCでは無効（クォーテーションの修正） 
+const isMobile = window.matchMedia("(max-width: 768px)").matches; 
+const maxWidth = 260; 
+// メニュー幅 
+// 要素の取得（HTMLに合わせて調整してください） 
+const nav = document.getElementById('nav'); const overlay = document.getElementById('overlay'); 
+// 状態 
+let startX = 0; 
+let currentX = 0; 
+let dragging = false; 
+let menuOpen = false; 
+let lastX = 0; 
+let velocity = 0; 
+let lastTime = 0; 
+// =============================== 
+// メニュー位置・影の更新（テンプレートリテラル修正） 
+// =============================== 
+function setPosition(x) { 
+const translate = x - maxWidth; nav.style.transform = `translateX(${translate}px)`; 
+overlay.style.opacity = (x / maxWidth) * 0.5; } 
+// =============================== 
+// アニメ補助（バネ / トランジション設定） 
+// =============================== 
+function springTo(target){ 
+nav.style.transition = "transform .35s cubic-bezier(.2,.8,.2,1)"; overlay.style.transition = "opacity .25s ease"; setPosition(target); } 
+// =============================== 
+// 慣性計算 
+// =============================== 
+function calcVelocity(x, time) { 
+const dt = time - lastTime; if (dt > 0) { velocity = (x - lastX) / dt; } lastX = x; lastTime = time; } 
+// =============================== 
+// iOS風スワイプイベント 
+// =============================== 
+if (isMobile && nav && overlay){ document.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; lastX = startX; lastTime = Date.now(); velocity = 0; // ベロシティのリセット // 画面左端(30px以内)からのスワイプ、またはメニューが開いている時のタップ if (startX < 30 || menuOpen) { dragging = true; // トランジションを一時的に解除して追従性を高める nav.style.transition = "none"; overlay.style.transition = "none"; } }, { passive: true }); document.addEventListener("touchmove", (e) => { if (!dragging) return; currentX = e.touches[0].clientX; const now = Date.now(); // 現在のメニュー位置を計算 let x; if (menuOpen) { // 開いている状態からは左スワイプ（負の移動）を許容 const diff = currentX - startX; x = Math.max(0, Math.min(maxWidth, maxWidth + diff)); } else { // 閉じてる状態からは右スワイプ const diff = currentX - startX; x = Math.max(0, Math.min(maxWidth, diff)); } calcVelocity(x, now); setPosition(x); // スワイプ中の画面上下スクロールを防止 if (e.cancelable) e.preventDefault(); }, { passive: false }); document.addEventListener("touchend", () => { if (!dragging) return; dragging = false; // 現在の位置をCSSから取得 const matrix = new WebKitCSSMatrix(getComputedStyle(nav).transform); let x = matrix.m41 + maxWidth; // 慣性を加算 x += velocity * 150; // 250から150に調整（滑らかさのため） x = Math.max(0, Math.min(maxWidth, x)); // 半分以上開いている、または右方向への勢いがある場合 if (x > maxWidth / 2) { menuOpen = true; springTo(maxWidth); } else { menuOpen = false; springTo(0); } }); // オーバーレイクリックで閉じる overlay.addEventListener("click", () => { menuOpen = false; springTo(0); }); }
