@@ -1,0 +1,166 @@
+```css
+/* ===============================
+   メインコンテンツ
+================================ */
+.main {
+  padding-left: 0;
+  padding-bottom: 100px;
+}
+
+
+/* ===============================
+   ヒーロー（トップ画像）
+================================ */
+.hero {
+  position: relative;
+  margin-top: 64px;
+  width: 100%;
+  height: 85.5vh;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+
+/* ===============================
+   コンテンツ部分
+================================ */
+.content {
+  padding: 24px;
+}
+
+
+/* 注意書き */
+.caution {
+  color: darkred;
+  font-weight: bold;
+}
+
+
+/* 注意枠 */
+.cautionarea {
+  border: 2px solid #8B0000;
+  padding: 10px;
+  display: inline-block;
+  border-radius: 8px;
+  background: #ffeaea;
+}
+
+
+/* ===============================
+   スライドショー
+================================ */
+.slideshow {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  /* 画面外の画像を絶対に見せない */
+  overflow: hidden;
+}
+
+
+/* ===============================
+   メイン画像
+================================ */
+.slide {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  /* 写真の比率を維持 */
+  object-fit: contain;
+
+  object-position: center;
+
+  /* 初期状態ではアニメーションOFF */
+  transition: none;
+
+  z-index: 10;
+
+  /* 写真の周囲に少し影 */
+  filter: drop-shadow(
+    0 0 20px rgba(0, 0, 0, .4)
+  );
+}
+
+
+/* ===============================
+   背景ぼかし画像
+================================ */
+.blur-slide {
+  position: absolute;
+
+  /*
+   * 少し大きくしておく
+   *
+   * これによってblurによる
+   * 画面端の白い隙間を防ぐ
+   */
+  inset: -5%;
+
+  width: auto;
+  height: auto;
+
+  /*
+   * 背景画像を画面いっぱいに表示
+   */
+  background-size: cover;
+
+  background-position: center;
+
+  background-repeat: no-repeat;
+
+  /*
+   * 背景をぼかす
+   */
+  filter:
+    blur(25px)
+    brightness(.6);
+
+  /*
+   * 初期位置
+   */
+  transform: translateX(100%);
+
+  /*
+   * 初期状態ではアニメーションOFF
+   */
+  transition: none;
+
+  z-index: 1;
+
+  /*
+   * 初期表示前は隠す
+   */
+  visibility: hidden;
+}
+
+
+/* ===============================
+   JSの初期化完了後
+================================ */
+
+/*
+ * メイン画像
+ */
+.slideshow.ready .slide {
+  transition:
+    transform .8s ease;
+}
+
+
+/*
+ * 背景画像
+ */
+.slideshow.ready .blur-slide {
+
+  transition:
+    transform .8s ease;
+
+  visibility: visible;
+}
